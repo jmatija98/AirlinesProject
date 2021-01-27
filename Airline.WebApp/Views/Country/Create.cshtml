@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Countries";
+}
+<h3>Add new country</h3>
+<form method="post" asp-controller="Country" asp-action="Add">
+    <div class="form-group">
+        <label for="id">Id:</label><br>
+        <input type="text" name="id" class="form_control" readonly>
+        <p style="color:red;">Id is auto-generated</p>
+    </div>
+    <div class="form-group">
+        <label for="name">Name:</label><br>
+        <input type="text" name="name" class="form_control">
+    </div>
+    <input class="btn btn-primary" type="submit" value="Add">
+</form>

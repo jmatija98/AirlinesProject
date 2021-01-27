@@ -1,0 +1,27 @@
+﻿@model List<Country>
+@{
+    ViewData["Title"] = "Countries";
+}
+<h1>Countries</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Details</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Country c in Model)
+        {
+        <tr>
+            <td>@c.CountryID</td>
+            <td>@c.Name</td>
+            <td>@Html.ActionLink("Details", "Details", "Country", new { id = c.CountryID })</td>
+            <td>@Html.ActionLink("Edit", "Edit", "Country", new { id = c.CountryID })</td>
+        </tr>
+        }
+    </tbody>
+</table>

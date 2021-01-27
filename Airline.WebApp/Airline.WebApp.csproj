@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Airline.Console\Airline.ConsoleA.csproj" />
+    <ProjectReference Include="..\Airline.Data\Airline.Data.csproj" />
+    <ProjectReference Include="..\Klub.Domain\Airline.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
