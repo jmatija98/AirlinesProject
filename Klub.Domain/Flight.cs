@@ -11,6 +11,8 @@ namespace Airline.Domain
         public int DurationInMinutes { get; set; }
         public string StartDestination { get; set; }
         public string EndDestination { get; set; }
+        public int PilotID { get; set; }
+        public Pilot Pilot { get; set; }
 
     }
 }

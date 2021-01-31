@@ -41,23 +41,8 @@ namespace Airline.ConsoleA
             
             //pilot method test
             
-            Airlines a = uow.Airline.FindById(1);
-            Pilot p1 = new Pilot
-            {
-                FirstName = "Luka",
-                LastName = "Babic",
-                Miles = 789,
-                Airlines = a,
-                Flights = new List<Flight>
-                {
-                    new Flight { DurationInMinutes = 120, StartDestination = "Belgrade", EndDestination = "Stockholm", Date = new DateTime(2015, 5, 15) },
-                    new Flight { DurationInMinutes = 100, StartDestination = "Belgrade", EndDestination = "Barcelona", Date = new DateTime(2017, 4, 15) }
-                }
-            };
-            uow.Pilot.Add(p1);
             
-            
-
+       
             uow.Commit();
         }
     }

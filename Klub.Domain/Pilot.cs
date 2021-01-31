@@ -12,8 +12,6 @@ namespace Airline.Domain
         public int Miles { get; set; }
         public int AirlinesId { get; set; }
         public Airlines Airlines { get; set; }
-        public List<Flight> Flights { get; set; }
-
         public override string ToString()
         {
             return $"{PilotID}: {FirstName}: {LastName}";
