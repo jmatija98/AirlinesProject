@@ -3,7 +3,10 @@
     ViewData["Title"] = "Countries";
 }
 <h1>Countries</h1>
-
+<p>
+    <a asp-action="Create">Add new</a>
+</p>
+<br>
 <table class="table">
     <thead>
         <tr>
@@ -16,12 +19,14 @@
     <tbody>
         @foreach (Country c in Model)
         {
-        <tr>
-            <td>@c.CountryID</td>
-            <td>@c.Name</td>
-            <td>@Html.ActionLink("Details", "Details", "Country", new { id = c.CountryID })</td>
-            <td>@Html.ActionLink("Edit", "Edit", "Country", new { id = c.CountryID })</td>
-        </tr>
+            <tr>
+                <td>@c.CountryID</td>
+                <td>@c.Name</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Country", new { id = c.CountryID })
+                    @Html.ActionLink("Delete", "Delete", new { id = c.CountryID })
+                </td>
+            </tr>
         }
     </tbody>
 </table>

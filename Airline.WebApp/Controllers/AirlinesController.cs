@@ -77,10 +77,11 @@ namespace Airline.WebApp.Controllers
         // POST: AirlinesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, AddAirlinesViewModel model)
         {
             try
             {
+                
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -7,20 +7,21 @@ using Airline.Domain;
 using Airline.WebApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Airline.WebApp.Controllers
 {
     public class PilotController : Controller
     {
-        private readonly IUnitOfWork uof;
-        public PilotController(IUnitOfWork uof)
+        private readonly IUnitOfWork uow;
+        public PilotController(IUnitOfWork uow)
         {
-            this.uof = uof;
+            this.uow = uow;
         }
         public ActionResult Index()
         {
-            List<Airlines> airlineList = uof.Airline.GetAll();
-            List<Pilot> pilotsList = uof.Pilot.GetAll();
+            List<Airlines> airlineList = uow.Airline.GetAll();
+            List<Pilot> pilotsList = uow.Pilot.GetAll();
 
             PilotWithAirlineViewModel model = new PilotWithAirlineViewModel { Airlines = airlineList, Pilots = pilotsList };
             return View(model);
@@ -35,21 +36,37 @@ namespace Airline.WebApp.Controllers
         // GET: PilotController/Create
         public ActionResult Create()
         {
-            return View();
+            List<Airlines> airlineList = uow.Airline.GetAll();
+            List<SelectListItem> airlineListItems = new List<SelectListItem>();
+            foreach (Airlines a in airlineList)
+            {
+                airlineListItems.Add(new SelectListItem { Text = a.Name, Value = a.AirlinesID.ToString() });
+            }
+            AddPilotViewModel model = new AddPilotViewModel { Airlines = airlineListItems };
+            return View(model);
         }
 
         // POST: PilotController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm] AddPilotViewModel model)
         {
             try
             {
+                Pilot p = new Pilot
+                {
+                    AirlinesId = model.AirlinesID,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Miles = model.Miles
+                };
+                uow.Pilot.Add(p);
+                uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Create));
             }
         }
 
