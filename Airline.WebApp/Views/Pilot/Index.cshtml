@@ -52,14 +52,12 @@
             @foreach (Airlines a in Model.Airlines)
             {
                 <td>
-
                     @if (p.AirlinesId == a.AirlinesID)
-                        @a.Name
+                    @a.Name
                 </td>
             }
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = p.PilotID }) |
-                
                 @Html.ActionLink("Delete", "Delete", new { id = p.PilotID })
             </td>
         </tr>

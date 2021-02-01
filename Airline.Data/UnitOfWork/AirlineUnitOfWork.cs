@@ -16,11 +16,13 @@ namespace Airline.Data.UnitOfWork
             Airline = new RepositoryAirline(context);
             Country = new RepositoryCountry(context);
             Pilot = new RepositoryPilot(context);
+            Flight = new RepositoryFlight(context);
 
         }
         public IRepositoryAirline Airline { get; set; }
         public IRepositoryCountry Country { get; set; }
         public IRepositoryPilot Pilot { get; set; }
+        public IRepositoryFlight Flight { get; set; }
 
         public void Commit()
         {

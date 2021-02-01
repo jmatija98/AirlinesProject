@@ -1,0 +1,74 @@
+﻿@model Airline.WebApp.Models.FlightsWithAirlineWithPilot
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                From
+            </th>
+            <th>
+                To
+            </th>
+            <th>
+                Airline
+            </th>
+            <th>
+                Pilot
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (Flight f in Model.Flights) {
+        <tr>
+            <td>
+                @f.FlightID
+            </td>
+            <td>
+                @f.Date
+            </td>
+            <td>
+                @f.DurationInMinutes
+            </td>
+            <td>
+                @f.StartDestination
+            </td>
+            <td>
+                @f.EndDestination
+            </td>
+            @foreach (Pilot p in Model.Pilots)
+            {
+                <td>
+                    @if(p.PilotID==f.PilotID)
+                        @p.AirlinesId
+                </td>
+                <td>
+                    @if (p.PilotID == f.PilotID)
+                    @p.PilotID
+                </td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=f.FlightID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = f.FlightID })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
