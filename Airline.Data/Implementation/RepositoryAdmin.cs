@@ -14,7 +14,8 @@ namespace Airline.Data.Implementation
         }
         public void Add(Admin s)
         {
-            throw new NotImplementedException();
+            this.context.Admins.Add(s);
+            
         }
 
         public void Delete(int id)
