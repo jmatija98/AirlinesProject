@@ -25,17 +25,26 @@ namespace Airline.WebApp.Controllers
             return View("Login");
         }
 
+        [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
             try
             {
                 Admin a = uow.Admins.getByUsernamePassword(model.Username, model.password);
+                HttpContext.Session.SetInt32("id", a.AdminId);
+                
                 return RedirectToAction("Index", "Flight");
             }
             catch
             {
                 return View("Login");
             }
+        }
+
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
         }
 
         // GET: AdminController/Create

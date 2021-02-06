@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Airline.Data.UnitOfWork;
 using Airline.Domain;
+using Airline.WebApp.Filters;
 using Airline.WebApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Airline.WebApp.Controllers
 {
+    [AdminLoggedIn]
     public class FlightController : Controller
     {
 
@@ -22,6 +24,7 @@ namespace Airline.WebApp.Controllers
         // GET: FlightController
         public ActionResult Index()
         {
+            ViewBag.IsLoggedIn = true;
             List<Flight> flightsAll = uow.Flight.GetAll();
             List<Pilot> pilotsAll = uow.Pilot.GetAll();
             List<Airlines> airlinesAll = uow.Airline.GetAll();

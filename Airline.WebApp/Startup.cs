@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Airline.Data.AdminUnitOfWork;
+using Airline.WebApp.Filters;
 
 namespace Airline.WebApp
 {
@@ -26,9 +27,14 @@ namespace Airline.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
+            });
             services.AddControllersWithViews();
             services.AddScoped<IUnitOfWork, AirlineUnitOfWork>();
             services.AddScoped<IAdminUnitOfWork, AdminUnitOfWork>();
+            services.AddScoped<AdminLoggedIn>();
             services.AddDbContext<AirlineContext>();
             services.AddDbContext<AdminContext>();
         }
@@ -50,6 +56,7 @@ namespace Airline.WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

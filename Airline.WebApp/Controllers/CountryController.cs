@@ -7,10 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Airline.WebApp.Filters;
 
 namespace Airline.WebApp.Controllers
 {
+    [AdminLoggedIn]
     public class CountryController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
@@ -20,6 +21,7 @@ namespace Airline.WebApp.Controllers
         }
         public ActionResult Index()
         {
+            ViewBag.IsLoggedIn = true;
             List<Country> allCountries = unitOfWork.Country.GetAll();
             return View("Index", allCountries);
         }
