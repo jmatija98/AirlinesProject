@@ -155,7 +155,7 @@ namespace Airline.WebApp.Controllers
                         Date = flight.Date,
                         DurationInMinutes = flight.DurationInMinutes,
                         PilotID = flight.PilotID,
-                        Price=flight.Price
+                        Price = flight.Price
                     }
                     );
                 }
