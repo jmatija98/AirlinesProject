@@ -28,6 +28,9 @@
                 To
             </th>
             <th>
+                Price
+            </th>
+            <th>
                 Airline
             </th>
             <th>
@@ -53,19 +56,22 @@
             <td>
                 @f.EndDestination
             </td>
+            <td>
+                @f.Price
+            </td>
             @foreach (Pilot p in Model.Pilots)
             {
                 <td>
-                    @if(p.PilotID==f.PilotID)
+                    @if (p.PilotID == f.PilotID)
                         @p.AirlinesId
                 </td>
                 <td>
                     @if (p.PilotID == f.PilotID)
-                    @p.PilotID
+                        @p.PilotID
                 </td>
             }
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=f.FlightID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = f.FlightID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = f.FlightID })
             </td>
         </tr>

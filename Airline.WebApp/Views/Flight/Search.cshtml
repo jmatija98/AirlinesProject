@@ -1,0 +1,35 @@
+﻿@model Airline.WebApp.Models.SearchFlightsViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search</h1>
+
+<h4>SearchFlightsViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="startID" class="control-label">Flying from</label>
+                <select asp-for="startID" asp-items="Model.startDestinations" class="form-control">
+                </select>
+                <span asp-validation-for="startID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="endID" class="control-label">Flying to</label>
+                <select asp-for="endID" asp-items="Model.endDestinations" class="form-control">
+                </select>
+                <span asp-validation-for="endID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

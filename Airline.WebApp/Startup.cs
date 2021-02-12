@@ -35,6 +35,7 @@ namespace Airline.WebApp
             services.AddScoped<IUnitOfWork, AirlineUnitOfWork>();
             services.AddScoped<IAdminUnitOfWork, AdminUnitOfWork>();
             services.AddScoped<AdminLoggedIn>();
+            services.AddScoped<NotLoggedIn>();
             services.AddDbContext<AirlineContext>();
             services.AddDbContext<AdminContext>();
         }

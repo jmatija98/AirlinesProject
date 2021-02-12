@@ -131,5 +131,80 @@ namespace Airline.WebApp.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        [NotLoggedIn]
+        public ActionResult Search([FromForm] SearchFlightsViewModel m)
+        {
+            List<Airlines> airlinesAll = uow.Airline.GetAll();
+            List<Pilot> pilotsAll = uow.Pilot.GetAll();
+            List<Flight> flightsAll = uow.Flight.GetAll();
+            Flight f1 = uow.Flight.FindById(m.startID);
+            String start = f1.StartDestination;
+            Flight f2 = uow.Flight.FindById(m.endID);
+            String end = f2.EndDestination;
+
+            List<Flight> flightsSearched = new List<Flight>();
+            foreach(Flight flight in flightsAll)
+            {
+                if(flight.StartDestination==start && flight.EndDestination == end)
+                {
+                    flightsSearched.Add(new Flight
+                    {
+                        StartDestination = flight.StartDestination,
+                        EndDestination = flight.EndDestination,
+                        Date = flight.Date,
+                        DurationInMinutes = flight.DurationInMinutes,
+                        PilotID = flight.PilotID,
+                        Price=flight.Price
+                    }
+                    );
+                }
+            }
+
+            FlightsWithAirlineWithPilot model = new FlightsWithAirlineWithPilot
+            {
+                Flights = flightsSearched,
+                Airlines=airlinesAll,
+                Pilots=pilotsAll
+            };
+           
+            return View("SearchFlights",model);
+        }
+
+        [NotLoggedIn]
+        public ActionResult Search()
+        {
+            List<Flight> flightsAll = uow.Flight.GetAll();
+            List<SelectListItem> startDestinations = new List<SelectListItem>();
+            List<SelectListItem> endDestinations = new List<SelectListItem>();
+            foreach (Flight flight in flightsAll)
+            {
+                if(!startDestinations.Any(item=>item.Text==flight.StartDestination))
+                startDestinations.Add(new SelectListItem
+                {
+                    Text = flight.StartDestination,
+                    Value = flight.FlightID.ToString()
+                }
+                );
+            }
+
+            foreach (Flight flight in flightsAll)
+            {
+                endDestinations.Add(new SelectListItem
+                {
+                    Text = flight.EndDestination,
+                    Value = flight.FlightID.ToString()
+                }
+                );
+            }
+
+            SearchFlightsViewModel model = new SearchFlightsViewModel
+            {
+                startDestinations = startDestinations,
+                endDestinations = endDestinations
+            };
+            return View("Search",model);
+           
+        }
     }
 }

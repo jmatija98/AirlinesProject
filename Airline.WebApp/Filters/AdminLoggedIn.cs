@@ -12,9 +12,12 @@ namespace Airline.WebApp.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            if (context.Filters.OfType<NotLoggedIn>().Any())
+            {
+                return;
+            }
             if (context.HttpContext.Session.GetInt32("id") == null)
             {
-                
                 context.HttpContext.Response.Redirect("/admin/index");
                 return;
             }
