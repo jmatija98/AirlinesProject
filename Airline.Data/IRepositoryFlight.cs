@@ -7,5 +7,7 @@ namespace Airline.Data
 {
     public interface IRepositoryFlight: IRepository<Flight>
     {
+        void Change(Flight flightNew);
+
     }
 }

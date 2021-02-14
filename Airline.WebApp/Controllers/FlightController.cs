@@ -114,23 +114,12 @@ namespace Airline.WebApp.Controllers
         // GET: FlightController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            uow.Flight.Delete(id);
+            uow.Commit();
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: FlightController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
         [HttpPost]
         [NotLoggedIn]
         public ActionResult Search([FromForm] SearchFlightsViewModel m)

@@ -18,6 +18,11 @@ namespace Airline.Data.Implementation
             context.Add(p);
         }
 
+        public void Change(Pilot pilotNew)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(int pilot_id)
         {
             Pilot p = context.Pilots.Find(pilot_id);

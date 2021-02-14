@@ -18,6 +18,11 @@ namespace Airline.Data.Implementation
             context.Flights.Add(f);
         }
 
+        public void Change(Flight flightNew)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(int id)
         {
             Flight f = context.Flights.Find(id);

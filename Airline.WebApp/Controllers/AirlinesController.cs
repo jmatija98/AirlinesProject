@@ -28,12 +28,6 @@ namespace Airline.WebApp.Controllers
             return View(a);
         }
 
-        // GET: AirlinesController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: AirlinesController/Create
         public ActionResult Create()
         {
@@ -72,20 +66,45 @@ namespace Airline.WebApp.Controllers
         }
 
         // GET: AirlinesController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit([FromRoute(Name = "id")] int AirlinesID)
         {
-            return View();
+            List<Country> countriesAll = uow.Country.GetAll();
+            List<SelectListItem> countries = new List<SelectListItem>();
+            foreach (Country country in countriesAll)
+            {
+                countries.Add(new SelectListItem { Text = country.Name, Value = country.CountryID.ToString() });
+            }
+            Airlines a = uow.Airline.FindById(AirlinesID);
+            EditAirlinesViewModel model = new EditAirlinesViewModel
+            {
+                Name = a.Name,
+                YearFounded=a.YearFounded,
+                NumberOfPlanes=a.NumberOfPlanes,
+                Countries=countries
+            };
+            return View(model);
         }
 
         // POST: AirlinesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, AddAirlinesViewModel model)
+        public ActionResult Edit([FromForm] EditAirlinesViewModel model)
         {
             try
             {
-                
-                return RedirectToAction(nameof(Index));
+                Airlines a = new Airlines
+                {
+                    Name = model.Name,
+                    YearFounded = model.YearFounded,
+                    NumberOfPlanes = model.NumberOfPlanes,
+                    CountryId = model.CountryID
+
+                };
+                //uow.Airline.Change(a);
+                //uow.Commit();
+                Console.WriteLine(a);
+                //return RedirectToAction(nameof(Index));
+                return View();
             }
             catch
             {
@@ -96,22 +115,10 @@ namespace Airline.WebApp.Controllers
         // GET: AirlinesController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            uow.Airline.Delete(id);
+            uow.Commit();
+            return RedirectToAction(nameof(Index));
         }
-
-        // POST: AirlinesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

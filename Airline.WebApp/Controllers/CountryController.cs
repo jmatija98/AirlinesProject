@@ -56,5 +56,12 @@ namespace Airline.WebApp.Controllers
             unitOfWork.Commit();
             return Index();
         }
+
+        public ActionResult Delete(int id)
+        {
+            unitOfWork.Country.Delete(id);
+            unitOfWork.Commit();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

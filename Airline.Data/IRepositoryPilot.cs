@@ -8,6 +8,8 @@ namespace Airline.Data
 {
     public interface IRepositoryPilot : IRepository<Pilot>
     {
+        void Change(Pilot pilotNew);
+
     }
 
 

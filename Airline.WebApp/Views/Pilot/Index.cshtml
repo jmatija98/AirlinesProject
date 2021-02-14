@@ -4,10 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Pilots</h1>
+<h1 style="color:#D5DDE5;">Pilots</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-info">New
+        <span class="glyphicon glyphicon-plus-sign"></span>
+    </a>
 </p>
 <table class="table">
     <thead>
@@ -27,40 +29,42 @@
             <th>
                 Airline ID
             </th>
-            <th>Airline
+            <th>
+                Airline
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (Pilot p  in Model.Pilots) {
-        <tr>
-            <td>
-                @p.PilotID
-            </td>
-            <td>
-                @p.FirstName
-            </td>
-            <td>
-                @p.LastName
-            </td>
-            <td>
-                @p.Miles
-            </td>
-            <td>
-                @p.AirlinesId
-            </td>
-            @foreach (Airlines a in Model.Airlines)
-            {
+        @foreach (Pilot p in Model.Pilots)
+        {
+            <tr>
                 <td>
-                    @if (p.AirlinesId == a.AirlinesID)
-                    @a.Name
+                    @p.PilotID
                 </td>
-            }
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = p.PilotID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = p.PilotID })
-            </td>
-        </tr>
-}
+                <td>
+                    @p.FirstName
+                </td>
+                <td>
+                    @p.LastName
+                </td>
+                <td>
+                    @p.Miles
+                </td>
+                <td>
+                    @p.AirlinesId
+                </td>
+                @foreach (Airlines a in Model.Airlines)
+                {
+                    <td>
+                        @if (p.AirlinesId == a.AirlinesID)
+                            @a.Name
+                    </td>
+                }
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = p.PilotID }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = p.PilotID }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -10,7 +10,6 @@ namespace Airline.Data
         void Add(T s);
         List<T> GetAll();
         T FindById(int id);
-        void Delete(int id);
-       
+        void Delete(int id);       
     }
 }

@@ -4,77 +4,80 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 style="color:#D5DDE5;">Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-info">New
+        <span class="glyphicon glyphicon-plus-sign"></span>
+    </a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="text-left">
                 ID
             </th>
-            <th>
+            <th class="text-left">
                 Date
             </th>
-            <th>
+            <th class="text-left">
                 Duration
             </th>
-            <th>
+            <th class="text-left">
                 From
-            </th>
+            </th class="text-left">
             <th>
                 To
             </th>
-            <th>
+            <th class="text-left">
                 Price
             </th>
-            <th>
+            <th class="text-left">
                 Airline
             </th>
-            <th>
+            <th class="text-left">
                 Pilot
             </th>
         </tr>
     </thead>
-    <tbody>
-@foreach (Flight f in Model.Flights) {
-        <tr>
-            <td>
-                @f.FlightID
-            </td>
-            <td>
-                @f.Date
-            </td>
-            <td>
-                @f.DurationInMinutes
-            </td>
-            <td>
-                @f.StartDestination
-            </td>
-            <td>
-                @f.EndDestination
-            </td>
-            <td>
-                @f.Price
-            </td>
-            @foreach (Pilot p in Model.Pilots)
-            {
-                <td>
-                    @if (p.PilotID == f.PilotID)
-                        @p.AirlinesId
+    <tbody class="table-hover">
+        @foreach (Flight f in Model.Flights)
+        {
+            <tr>
+                <td class="text-left">
+                    @f.FlightID
                 </td>
-                <td>
-                    @if (p.PilotID == f.PilotID)
-                        @p.PilotID
+                <td class="text-left">
+                    @f.Date
                 </td>
-            }
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = f.FlightID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = f.FlightID })
-            </td>
-        </tr>
-}
+                <td class="text-left">
+                    @f.DurationInMinutes
+                </td>
+                <td class="text-left">
+                    @f.StartDestination
+                </td>
+                <td class="text-left">
+                    @f.EndDestination
+                </td>
+                <td class="text-left">
+                    @f.Price
+                </td>
+                @foreach (Pilot p in Model.Pilots)
+                {
+                    <td class="text-left">
+                        @if (p.PilotID == f.PilotID)
+                            @p.AirlinesId
+                    </td>
+                    <td class="text-left">
+                        @if (p.PilotID == f.PilotID)
+                            @p.PilotID
+                    </td>
+                }
+                <td class="text-left">
+                    @Html.ActionLink("Edit", "Edit", new { id = f.FlightID }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = f.FlightID }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

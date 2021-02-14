@@ -2,9 +2,11 @@
 @{
     ViewData["Title"] = "Countries";
 }
-<h1>Countries</h1>
+<h1 style="color:#D5DDE5;">Countries</h1>
 <p>
-    <a asp-action="Create">Add new</a>
+    <a asp-action="Create" class="btn btn-info">New
+        <span class="glyphicon glyphicon-plus-sign"></span>
+    </a>
 </p>
 <br>
 <table class="table">
@@ -23,8 +25,8 @@
                 <td>@c.CountryID</td>
                 <td>@c.Name</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", "Country", new { id = c.CountryID })
-                    @Html.ActionLink("Delete", "Delete", new { id = c.CountryID })
+                    @Html.ActionLink("Edit", "Edit", "Country", new { id = c.CountryID }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Delete", "Delete", new { id = c.CountryID }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }

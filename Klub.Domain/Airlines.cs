@@ -13,7 +13,7 @@ namespace Airline.Domain
 
         public override string ToString()
         {
-            return $"{AirlinesID}: {Name}: {YearFounded}: {Country.Name}";
+            return $"{AirlinesID}: {Name}: {YearFounded}: {CountryId}";
         }
     }
 }

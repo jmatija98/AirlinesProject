@@ -19,6 +19,16 @@ namespace Airline.Data.Implementation
             context.Add(s);
         }
 
+        public void Change(Airlines airlineNew)
+        {
+            var airline = context.Airlines.First(a => a.AirlinesID == airlineNew.AirlinesID);
+            airline.CountryId = airlineNew.CountryId;
+            airline.Name = airlineNew.Name;
+            airline.NumberOfPlanes = airlineNew.NumberOfPlanes;
+            airline.YearFounded = airlineNew.YearFounded;
+            
+        }
+
         public void Delete(int airline_id)
         {
             Airlines a = context.Airlines.Find(airline_id);
