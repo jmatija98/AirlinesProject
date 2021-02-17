@@ -38,12 +38,6 @@ namespace Airline.WebApp.Controllers
             return View(model);
         }
 
-        // GET: FlightController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: FlightController/Create
         public ActionResult Create()
         {
@@ -78,6 +72,7 @@ namespace Airline.WebApp.Controllers
                     DurationInMinutes = model.DurationInMinutes,
                     StartDestination = model.StartDestination,
                     EndDestination = model.EndDestination,
+                    Price=model.Price,
                     PilotID = model.PilotID
                 };
                 uow.Flight.Add(f);
@@ -91,18 +86,50 @@ namespace Airline.WebApp.Controllers
         }
 
         // GET: FlightController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit([FromRoute] int id)
         {
-            return View();
+            List<Pilot> pilotsAll = uow.Pilot.GetAll();
+            List<SelectListItem> pilots = new List<SelectListItem>();
+            foreach (Pilot pilot in pilotsAll)
+            {
+                pilots.Add(new SelectListItem {
+                    Text = pilot.FirstName + " " + pilot.LastName,
+                    Value = pilot.PilotID.ToString() });
+            }
+            Flight flight = uow.Flight.FindById(id);
+            AddFlightViewModel model = new AddFlightViewModel
+            {
+                Date = flight.Date,
+                DurationInMinutes = flight.DurationInMinutes,
+                StartDestination = flight.StartDestination,
+                EndDestination = flight.EndDestination,
+                Price=flight.Price,
+                Pilots = pilots
+
+            };
+
+            return View(model);
         }
 
         // POST: FlightController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit([FromForm] AddFlightViewModel model, [FromRoute(Name = "id")] int id)
         {
             try
             {
+                Flight f = new Flight
+                {
+                    FlightID = id,
+                    Date = model.Date,
+                    DurationInMinutes = model.DurationInMinutes,
+                    StartDestination = model.StartDestination,
+                    EndDestination = model.EndDestination,
+                    Price = model.Price,
+                    PilotID = model.PilotID
+                };
+                uow.Flight.Change(f);
+                uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -169,11 +196,11 @@ namespace Airline.WebApp.Controllers
             foreach (Flight flight in flightsAll)
             {
                 if(!startDestinations.Any(item=>item.Text==flight.StartDestination))
-                startDestinations.Add(new SelectListItem
-                {
-                    Text = flight.StartDestination,
-                    Value = flight.FlightID.ToString()
-                }
+                    startDestinations.Add(new SelectListItem
+                    {
+                        Text = flight.StartDestination,
+                        Value = flight.FlightID.ToString()
+                    }
                 );
             }
 

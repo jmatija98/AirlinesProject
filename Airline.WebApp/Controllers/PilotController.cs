@@ -75,23 +75,51 @@ namespace Airline.WebApp.Controllers
         }
 
         // GET: PilotController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit([FromRoute(Name = "id")] int pilotID)
         {
-            return View();
+            List<Airlines> airlinesAll = uow.Airline.GetAll();
+            List<SelectListItem> airlines = new List<SelectListItem>();
+            foreach (Airlines airline in airlinesAll)
+            {
+                airlines.Add(new SelectListItem { Text = airline.Name, Value = airline.AirlinesID.ToString() });
+            }
+            Pilot pilot = uow.Pilot.FindById(pilotID);
+            AddPilotViewModel model = new AddPilotViewModel
+            {
+                FirstName = pilot.FirstName,
+                LastName = pilot.LastName,
+                Miles = pilot.Miles,
+                Airlines = airlines
+
+            };
+
+            return View(model);
         }
 
         // POST: PilotController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit([FromForm] AddPilotViewModel model, [FromRoute(Name = "id")] int id)
         {
             try
             {
+                Pilot p = new Pilot
+                {
+                    PilotID = id,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Miles=model.Miles,
+                    AirlinesId=model.AirlinesID
+
+                };
+                uow.Pilot.Change(p);
+                uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
+
             }
         }
 

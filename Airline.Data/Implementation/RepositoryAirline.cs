@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Data.Implementation
 {
@@ -21,12 +22,8 @@ namespace Airline.Data.Implementation
 
         public void Change(Airlines airlineNew)
         {
-            var airline = context.Airlines.First(a => a.AirlinesID == airlineNew.AirlinesID);
-            airline.CountryId = airlineNew.CountryId;
-            airline.Name = airlineNew.Name;
-            airline.NumberOfPlanes = airlineNew.NumberOfPlanes;
-            airline.YearFounded = airlineNew.YearFounded;
-            
+            context.Entry(airlineNew).State = EntityState.Modified;
+
         }
 
         public void Delete(int airline_id)

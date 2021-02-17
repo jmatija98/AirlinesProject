@@ -1,4 +1,5 @@
 ﻿using Airline.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Airline.Data.Implementation
 
         public void Change(Pilot pilotNew)
         {
-            throw new NotImplementedException();
+            context.Entry(pilotNew).State = EntityState.Modified;
         }
 
         public void Delete(int pilot_id)

@@ -12,6 +12,7 @@ namespace Airline.WebApp.Models
         public int DurationInMinutes { set; get; }
         public string StartDestination { set; get; }
         public string EndDestination { set; get; }
+        public int Price { get; set; }
         public int PilotID { set; get; }
         public List<SelectListItem> Pilots { set; get; }
 

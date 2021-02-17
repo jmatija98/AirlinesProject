@@ -88,27 +88,26 @@ namespace Airline.WebApp.Controllers
         // POST: AirlinesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([FromForm] EditAirlinesViewModel model)
+        public ActionResult Edit([FromForm] EditAirlinesViewModel model, [FromRoute(Name = "id")] int id)
         {
             try
             {
                 Airlines a = new Airlines
                 {
+                    AirlinesID=id,
                     Name = model.Name,
                     YearFounded = model.YearFounded,
                     NumberOfPlanes = model.NumberOfPlanes,
                     CountryId = model.CountryID
 
                 };
-                //uow.Airline.Change(a);
-                //uow.Commit();
-                Console.WriteLine(a);
-                //return RedirectToAction(nameof(Index));
-                return View();
+                uow.Airline.Change(a);
+                uow.Commit();
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 

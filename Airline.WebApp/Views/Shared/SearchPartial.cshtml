@@ -1,0 +1,72 @@
+﻿@model Airline.WebApp.Models.FlightsWithAirlineWithPilot;
+@{
+    ViewData["Title"] = "SearchFlights";
+}
+
+<h1>SearchFlights</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Airline
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                From
+            </th>
+            <th>
+                To
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Flight f in Model.Flights)
+        {
+            <tr>
+                @foreach (Pilot p in Model.Pilots)
+                {
+
+                    @if (p.PilotID == f.PilotID)
+                    {
+                        @foreach (Airlines a in Model.Airlines)
+                        {
+                            @if (p.AirlinesId == a.AirlinesID)
+                            {
+                                <td>
+                                    @a.Name
+
+                                </td>
+                            }
+                        }
+                    }
+                }
+                <td>
+                    @f.Date
+                </td>
+                <td>
+                    @f.DurationInMinutes
+                </td>
+                <td>
+                    @f.StartDestination
+                </td>
+                <td>
+                    @f.EndDestination
+                </td>
+                <td>
+                    @f.Price
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
