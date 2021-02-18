@@ -31,6 +31,8 @@ namespace Airline.WebApp.Controllers
         // GET: AirlinesController/Create
         public ActionResult Create()
         {
+            ViewBag.IsLoggedIn = true;
+
             List<Country> countryList = uow.Country.GetAll();
             List<SelectListItem> countries = new List<SelectListItem>();
             foreach(Country c in countryList)
@@ -46,6 +48,8 @@ namespace Airline.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([FromForm] AddAirlinesViewModel m)
         {
+            ViewBag.IsLoggedIn = true;
+
             try
             {
                 Airlines a = new Airlines
@@ -68,6 +72,8 @@ namespace Airline.WebApp.Controllers
         // GET: AirlinesController/Edit/5
         public ActionResult Edit([FromRoute(Name = "id")] int AirlinesID)
         {
+            ViewBag.IsLoggedIn = true;
+
             List<Country> countriesAll = uow.Country.GetAll();
             List<SelectListItem> countries = new List<SelectListItem>();
             foreach (Country country in countriesAll)
@@ -90,6 +96,8 @@ namespace Airline.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([FromForm] EditAirlinesViewModel model, [FromRoute(Name = "id")] int id)
         {
+            ViewBag.IsLoggedIn = true;
+
             try
             {
                 Airlines a = new Airlines
@@ -114,6 +122,8 @@ namespace Airline.WebApp.Controllers
         // GET: AirlinesController/Delete/5
         public ActionResult Delete(int id)
         {
+            ViewBag.IsLoggedIn = true;
+
             uow.Airline.Delete(id);
             uow.Commit();
             return RedirectToAction(nameof(Index));

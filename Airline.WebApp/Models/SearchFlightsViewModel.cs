@@ -12,5 +12,6 @@ namespace Airline.WebApp.Models
         public List<SelectListItem> startDestinations { set; get; }
         public int endID { get; set; }
         public List<SelectListItem> endDestinations { set; get; }
+        public DateTime Date { set; get; }
     }
 }

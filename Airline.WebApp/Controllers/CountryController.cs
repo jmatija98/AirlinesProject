@@ -26,19 +26,10 @@ namespace Airline.WebApp.Controllers
             return View("Index", allCountries);
         }
 
-        public ActionResult Details([FromRoute(Name = "id")]int idCountry)
-        {
-            Country country = unitOfWork.Country.FindById(idCountry);
-            return View(country);
-        }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         public ActionResult Add([FromForm]Country c)
         {
+            ViewBag.IsLoggedIn = true;
+
             unitOfWork.Country.Add(c);
             unitOfWork.Commit();
             return Index();
@@ -46,12 +37,16 @@ namespace Airline.WebApp.Controllers
 
         public ActionResult Edit([FromRoute(Name = "id")] int idCountry)
         {
+            ViewBag.IsLoggedIn = true;
+
             Country country = unitOfWork.Country.FindById(idCountry);
             return View(country);
         }
         
         public ActionResult Change([FromForm(Name = "name")] String name, [FromForm(Name = "idx")] int id)
-        { 
+        {
+            ViewBag.IsLoggedIn = true;
+
             unitOfWork.Country.changeName(id,name);
             unitOfWork.Commit();
             return Index();
@@ -59,6 +54,8 @@ namespace Airline.WebApp.Controllers
 
         public ActionResult Delete(int id)
         {
+            ViewBag.IsLoggedIn = true;
+
             unitOfWork.Country.Delete(id);
             unitOfWork.Commit();
             return RedirectToAction(nameof(Index));

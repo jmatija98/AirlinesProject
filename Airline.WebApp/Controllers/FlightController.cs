@@ -41,6 +41,8 @@ namespace Airline.WebApp.Controllers
         // GET: FlightController/Create
         public ActionResult Create()
         {
+            ViewBag.IsLoggedIn = true;
+
             List<Pilot> pilotsAll = uow.Pilot.GetAll();
             List<SelectListItem> p = new List<SelectListItem>();
             foreach (Pilot pilot in pilotsAll)
@@ -64,6 +66,8 @@ namespace Airline.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([FromForm] AddFlightViewModel model)
         {
+            ViewBag.IsLoggedIn = true;
+
             try
             {
                 Flight f = new Flight
@@ -88,6 +92,8 @@ namespace Airline.WebApp.Controllers
         // GET: FlightController/Edit/5
         public ActionResult Edit([FromRoute] int id)
         {
+            ViewBag.IsLoggedIn = true;
+
             List<Pilot> pilotsAll = uow.Pilot.GetAll();
             List<SelectListItem> pilots = new List<SelectListItem>();
             foreach (Pilot pilot in pilotsAll)
@@ -116,6 +122,8 @@ namespace Airline.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([FromForm] AddFlightViewModel model, [FromRoute(Name = "id")] int id)
         {
+            ViewBag.IsLoggedIn = true;
+
             try
             {
                 Flight f = new Flight
@@ -141,6 +149,8 @@ namespace Airline.WebApp.Controllers
         // GET: FlightController/Delete/5
         public ActionResult Delete(int id)
         {
+            ViewBag.IsLoggedIn = true;
+
             uow.Flight.Delete(id);
             uow.Commit();
             return RedirectToAction(nameof(Index));
@@ -158,11 +168,12 @@ namespace Airline.WebApp.Controllers
             String start = f1.StartDestination;
             Flight f2 = uow.Flight.FindById(m.endID);
             String end = f2.EndDestination;
+            DateTime onlyDate = m.Date.Date;
 
             List<Flight> flightsSearched = new List<Flight>();
             foreach(Flight flight in flightsAll)
             {
-                if(flight.StartDestination==start && flight.EndDestination == end)
+                if(flight.Date.Date==onlyDate && flight.StartDestination==start && flight.EndDestination == end)
                 {
                     flightsSearched.Add(new Flight
                     {
@@ -176,6 +187,9 @@ namespace Airline.WebApp.Controllers
                     );
                 }
             }
+            if(flightsSearched.Count==0)
+                return RedirectToAction(nameof(Index));
+
 
             FlightsWithAirlineWithPilot model = new FlightsWithAirlineWithPilot
             {
