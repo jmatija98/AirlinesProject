@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Country" asp-action="Index">Airline.WebApp</a>
+                <a class="navbar-brand" id="left" asp-area="" asp-controller="Flight" asp-action="Index">AirScanner</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,26 +21,26 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (ViewBag.IsLoggedIn != null && ViewBag.IsLoggedIn)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Country" asp-action="Index">Countries</a>
+                            <li class="nav-item" >
+                                <a id="left" class="nav-link text-dark" asp-area="" asp-controller="Country" asp-action="Index">Countries</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" id="left">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Airlines" asp-action="Index">Airlines</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" id="left">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Pilot" asp-action="Index">Pilots</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" id="left">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Flight" asp-action="Index">Flights</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Logout">Logout</a>
+                            <li class="nav-item" id="right">
+                                <a class="nav-link text-dark"  asp-area="" asp-controller="Admin" asp-action="Logout">Logout</a>
                             </li>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Login</a>
+                            <li class="nav-item" id="right">
+                                <a class="nav-link text-dark"  asp-area="" asp-controller="Admin" asp-action="Index">Login</a>
                             </li>
                         }
                     </ul>

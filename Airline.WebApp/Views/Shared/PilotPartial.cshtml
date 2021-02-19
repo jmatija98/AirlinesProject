@@ -1,0 +1,25 @@
+﻿@model Airline.WebApp.Models.PilotGroupViewModel
+
+
+        <tr>
+            <td>
+               @(Model.Num+1)
+            </td>
+            <td>
+                @Model.FirstName
+                <input hidden value="@Model.FirstName" name="Pilots[@Model.Num].Firstname" />
+            </td>
+            <td>
+                @Model.LastName
+                <input hidden value="@Model.LastName" name="Pilots[@Model.Num].Lastname" />
+            </td>
+            <td>
+                @Model.Miles
+                <input hidden value="@Model.Miles" name="Pilots[@Model.Num].Miles" />
+            </td>
+            <td>
+                @Model.AirlinesID
+                <input hidden value="@Model.AirlinesID" name="Pilots[@Model.Num].AirlinesID"/>
+            </td>
+        </tr>
+

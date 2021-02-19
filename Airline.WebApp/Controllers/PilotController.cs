@@ -37,6 +37,33 @@ namespace Airline.WebApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddGroup(PilotGroupViewModel request)
+        {
+            ViewBag.IsLoggedIn = true;
+
+            PilotGroupViewModel model = new PilotGroupViewModel
+            {
+                Num=request.Num,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Miles=request.Miles,
+                AirlinesID=request.AirlinesID
+            };
+            //return RedirectToAction(nameof(Index));
+            return PartialView("PilotPartial", model);
+        }
+
+        public ActionResult CreateGroup(AddPilotViewModel model)
+        {
+            foreach(Pilot p in model.Pilots)
+            {
+                uow.Pilot.Add(p);
+            }
+            uow.Commit();
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: PilotController/Create
         public ActionResult Create()
         {

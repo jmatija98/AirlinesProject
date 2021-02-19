@@ -10,30 +10,43 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="CreateGroup">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
+                <input asp-for="FirstName" id="first" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
+                <input asp-for="LastName" id="last" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Miles" class="control-label"></label>
-                <input asp-for="Miles" class="form-control" />
+                <input asp-for="Miles" id="miles" class="form-control" />
                 <span asp-validation-for="Miles" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AirlinesID" class="control-label"></label>
-                <select asp-for="AirlinesID" asp-items="Model.Airlines" class="form-control">
+                <label class="control-label"></label>
+                <select asp-for="AirlinesID" id="airline-select" asp-items="Model.Airlines" class="form-control">
                 </select>
-                
                 <span asp-validation-for="AirlinesID" class="text-danger"></span>
             </div>
+            <button class="btn-dark" id="add-pilot">Add pilot</button>
+            <table class="table" id="p">
+                <thead>
+                    <tr>
+                        <th>Num</th>
+                        <th>First name</th>
+                        <th>Last Name</th>
+                        <th>Miles</th>
+                        <th>Airline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -45,6 +58,21 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts{
+    <script>
+        $('#add-pilot').click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '@Url.ActionLink("AddGroup", "Pilot")',
+                method: 'post',
+                data: { FirstName: $('#first').val(), LastName: $('#last').val(), Miles: $('#miles').val(), AirlinesID: $("#airline-select").val(), Num: $('#p tbody tr').length },
+                success: function (data) {
+                    $('#p tbody').append(data);
+                },
+                error: function () {
+                    alert("Error");
+                }
+            });
+        });
+    </script>
 }
