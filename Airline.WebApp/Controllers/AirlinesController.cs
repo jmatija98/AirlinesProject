@@ -24,8 +24,17 @@ namespace Airline.WebApp.Controllers
         public ActionResult Index()
         {
             ViewBag.IsLoggedIn = true;
-            List<Airlines> a = uow.Airline.GetAll();
-            return View(a);
+            
+            List<Country> countriesAll = uow.Country.GetAll();
+            List<Airlines> airlinesAll = uow.Airline.GetAll();
+            AirlinesWithCountries model = new AirlinesWithCountries
+            {
+                
+                Airlines = airlinesAll,
+                Countries=countriesAll
+
+            };
+            return View(model);
         }
 
         // GET: AirlinesController/Create

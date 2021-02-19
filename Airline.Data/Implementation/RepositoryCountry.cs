@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Airline.Data.Implementation
 {
@@ -25,10 +25,10 @@ namespace Airline.Data.Implementation
             context.Add(c);
         }
 
-        public void changeName(int id, String name)
+        public void change(Country c)
         {
-            Country c1 = context.Countries.Find(id);
-            c1.Name = name;
+            context.Entry(c).State = EntityState.Modified;
+
         }
 
         public void Delete(int conutry_id)

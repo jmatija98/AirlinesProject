@@ -12,17 +12,16 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
+            
             <th>Name</th>
-            <th>Details</th>
-            <th>&nbsp;</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach (Country c in Model)
         {
             <tr>
-                <td>@c.CountryID</td>
+                
                 <td>@c.Name</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", "Country", new { id = c.CountryID }, new { @class = "btn btn-info" })

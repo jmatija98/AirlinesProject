@@ -11,7 +11,7 @@ a.navbar-brand {
 body {
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('../img/pozadina.png') !important;
     height: 100vh;
-    background-repeat: no-repeat;
+    background-repeat:initial;
     background-size: cover;
     font-family: "Roboto", helvetica, arial, sans-serif;
     font-size: 16px;

@@ -9,7 +9,7 @@ namespace Airline.Data
     public interface IRepositoryCountry: IRepository<Country>
     {
         void addWithParameters(string Name);
-        void changeName(int id, String name);
+        void change(Country countryNew);
         
     }
 

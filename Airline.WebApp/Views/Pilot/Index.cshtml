@@ -14,9 +14,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                ID
-            </th>
+            
             <th>
                 First Name
             </th>
@@ -27,20 +25,17 @@
                 Miles
             </th>
             <th>
-                Airline ID
+                Airline
             </th>
             <th>
-                Airline
+                Action
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (Pilot p in Model.Pilots)
         {
-            <tr>
-                <td>
-                    @p.PilotID
-                </td>
+           <tr>
                 <td>
                     @p.FirstName
                 </td>
@@ -50,16 +45,16 @@
                 <td>
                     @p.Miles
                 </td>
-                <td>
-                    @p.AirlinesId
-                </td>
                 @foreach (Airlines a in Model.Airlines)
                 {
-                    <td>
+
                         @if (p.AirlinesId == a.AirlinesID)
+                        {
+                            <td>
                             @a.Name
-                    </td>
-                }
+                            </td>
+                            }
+                 }
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = p.PilotID }, new { @class = "btn btn-info" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = p.PilotID }, new { @class = "btn btn-danger" })

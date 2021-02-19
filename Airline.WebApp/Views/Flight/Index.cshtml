@@ -14,70 +14,80 @@
 <table class="table">
     <thead>
         <tr>
-            <th class="text-left">
-                ID
+            <th>
+                Pilot
             </th>
-            <th class="text-left">
+            <th>
+                Airline
+            </th>
+            <th>
                 Date
             </th>
-            <th class="text-left">
+            <th>
                 Duration
             </th>
-            <th class="text-left">
+            <th>
                 From
-            </th class="text-left">
+            </th>
             <th>
                 To
             </th>
-            <th class="text-left">
+            <th>
                 Price
             </th>
-            <th class="text-left">
-                Airline
-            </th>
-            <th class="text-left">
-                Pilot
+            <th>
+                Action
             </th>
         </tr>
     </thead>
-    <tbody class="table-hover">
+    <tbody>
         @foreach (Flight f in Model.Flights)
         {
-            <tr>
-                <td class="text-left">
-                    @f.FlightID
-                </td>
-                <td class="text-left">
-                    @f.Date
-                </td>
-                <td class="text-left">
-                    @f.DurationInMinutes
-                </td>
-                <td class="text-left">
-                    @f.StartDestination
-                </td>
-                <td class="text-left">
-                    @f.EndDestination
-                </td>
-                <td class="text-left">
-                    @f.Price
-                </td>
-                @foreach (Pilot p in Model.Pilots)
+        <tr>
+            @foreach (Pilot p in Model.Pilots)
+            {
+
+                @if (p.PilotID == f.PilotID)
                 {
-                    <td class="text-left">
-                        @if (p.PilotID == f.PilotID)
-                            @p.AirlinesId
+                    <td>
+                        @(p.FirstName+" "+p.LastName)
+
                     </td>
-                    <td class="text-left">
-                        @if (p.PilotID == f.PilotID)
-                            @p.PilotID
-                    </td>
+                    @foreach (Airlines a in Model.Airlines)
+                    {
+                        @if (p.AirlinesId == a.AirlinesID)
+                        {
+                            <td>
+                                @a.Name
+
+                            </td>
+                        }
+                    }
                 }
-                <td class="text-left">
-                    @Html.ActionLink("Edit", "Edit", new { id = f.FlightID }, new { @class = "btn btn-info" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = f.FlightID }, new { @class = "btn btn-danger" })
-                </td>
-            </tr>
+            }
+            <td>
+                @f.Date
+            </td>
+            <td>
+                @f.DurationInMinutes
+            </td>
+            <td>
+                @f.StartDestination
+            </td>
+            <td>
+                @f.EndDestination
+            </td>
+            <td>
+                @f.Price
+            </td>
+            <td class="text-left">
+                @Html.ActionLink("Edit", "Edit", new { id = f.FlightID }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = f.FlightID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
         }
+
     </tbody>
 </table>
+                
+ 

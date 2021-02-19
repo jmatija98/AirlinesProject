@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Airline.Domain.Airlines>
+﻿@model Airline.WebApp.Models.AirlinesWithCountries
 
 @{
     ViewData["Title"] = "Index";
@@ -7,56 +7,63 @@
 <h1 style="color:#D5DDE5;">Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-info">New
+    <a asp-action="Create" class="btn btn-info">
+        New
         <span class="glyphicon glyphicon-plus-sign"></span>
     </a>
-</p><br>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    ID
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Year Founded
-                </th>
-                <th>
-                    Number Of Plains
-                </th>
-                <th>
-                    Country ID
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AirlinesID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.YearFounded)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOfPlanes)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CountryId)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", "Airlines", new { id = item.AirlinesID }, new { @class = "btn btn-info" }) |
+</p>
+<br>
+<table class="table">
+    <thead>
+        <tr>
 
-                        @Html.ActionLink("Delete", "Delete", new { id = item.AirlinesID }, new { @class = "btn btn-danger" })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            <th>
+                Name
+            </th>
+            <th>
+                Year Founded
+            </th>
+            <th>
+                Number Of Plains
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Airlines a in Model.Airlines)
+        {
+            <tr>
+
+                <td>
+                    @a.Name
+                </td>
+                <td>
+                    @a.YearFounded
+                </td>
+                <td>
+                    @a.NumberOfPlanes
+                </td>
+                @foreach (Country c in Model.Countries)
+                {
+                    @if (c.CountryID == a.CountryId)
+                    {
+                        <td>
+                            @c.Name
+                        </td>
+                    }
+                }
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Airlines", new { id = a.AirlinesID }, new { @class = "btn btn-info" }) |
+
+                    @Html.ActionLink("Delete", "Delete", new { id = a.AirlinesID }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

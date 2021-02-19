@@ -26,7 +26,16 @@ namespace Airline.WebApp.Controllers
             return View("Index", allCountries);
         }
 
-        public ActionResult Add([FromForm]Country c)
+        public ActionResult Create()
+        {
+            ViewBag.IsLoggedIn = true;
+            return View();
+            
+        }
+
+
+        [HttpPost]
+        public ActionResult Create([FromForm]Country c)
         {
             ViewBag.IsLoggedIn = true;
 
@@ -42,12 +51,16 @@ namespace Airline.WebApp.Controllers
             Country country = unitOfWork.Country.FindById(idCountry);
             return View(country);
         }
-        
-        public ActionResult Change([FromForm(Name = "name")] String name, [FromForm(Name = "idx")] int id)
+        [HttpPost]
+        public ActionResult Edit([FromForm(Name = "name")] String name, [FromRoute(Name = "id")]  int id)
         {
             ViewBag.IsLoggedIn = true;
-
-            unitOfWork.Country.changeName(id,name);
+            Country c = new Country
+            {
+                CountryID = id,
+                Name = name
+            };
+            unitOfWork.Country.change(c);
             unitOfWork.Commit();
             return Index();
         }
