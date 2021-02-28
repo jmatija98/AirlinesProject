@@ -33,7 +33,7 @@ namespace Airline.Data.Implementation
 
         public void Delete(int conutry_id)
         {
-            Country c = context.Countries.Single(c => c.CountryID == conutry_id);
+            Country c = context.Countries.Find(conutry_id);
             context.Remove(c);
         }
 

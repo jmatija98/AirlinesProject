@@ -38,10 +38,13 @@ namespace Airline.WebApp.Controllers
         public ActionResult Create([FromForm]Country c)
         {
             ViewBag.IsLoggedIn = true;
-
-            unitOfWork.Country.Add(c);
-            unitOfWork.Commit();
-            return Index();
+            if (ModelState.IsValid)
+            {
+                unitOfWork.Country.Add(c);
+                unitOfWork.Commit();
+                return Index();
+            }
+            else return Create();
         }
 
         public ActionResult Edit([FromRoute(Name = "id")] int idCountry)

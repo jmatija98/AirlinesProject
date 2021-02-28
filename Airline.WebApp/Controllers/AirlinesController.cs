@@ -59,7 +59,7 @@ namespace Airline.WebApp.Controllers
         {
             ViewBag.IsLoggedIn = true;
 
-            try
+            if(ModelState.IsValid)
             {
                 Airlines a = new Airlines
                 {
@@ -72,9 +72,9 @@ namespace Airline.WebApp.Controllers
                 uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                return RedirectToAction(nameof(Create));
+                return View(m);
             }
         }
 

@@ -68,7 +68,7 @@ namespace Airline.WebApp.Controllers
         {
             ViewBag.IsLoggedIn = true;
 
-            try
+            if(ModelState.IsValid)
             {
                 Flight f = new Flight
                 {
@@ -83,9 +83,9 @@ namespace Airline.WebApp.Controllers
                 uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                return RedirectToAction(nameof(Create));
+                return Create();
             }
         }
 
@@ -124,25 +124,25 @@ namespace Airline.WebApp.Controllers
         {
             ViewBag.IsLoggedIn = true;
 
-            try
+            if(ModelState.IsValid)
             {
-                Flight f = new Flight
-                {
-                    FlightID = id,
-                    Date = model.Date,
-                    DurationInMinutes = model.DurationInMinutes,
-                    StartDestination = model.StartDestination,
-                    EndDestination = model.EndDestination,
-                    Price = model.Price,
-                    PilotID = model.PilotID
-                };
-                uow.Flight.Change(f);
-                uow.Commit();
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+                    Flight f = new Flight
+                    {
+                        FlightID = id,
+                        Date = model.Date,
+                        DurationInMinutes = model.DurationInMinutes,
+                        StartDestination = model.StartDestination,
+                        EndDestination = model.EndDestination,
+                        Price = model.Price,
+                        PilotID = model.PilotID
+                    };
+                    uow.Flight.Change(f);
+                    uow.Commit();
+                    return RedirectToAction(nameof(Index));
+                }
+            else
             {
-                return View();
+                return Edit(id);
             }
         }
 

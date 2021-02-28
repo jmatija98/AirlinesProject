@@ -26,16 +26,23 @@ namespace Airline.WebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public ActionResult Login([FromForm] LoginViewModel model)
         {
-            try
+            if(ModelState.IsValid)
             {
-                Admin a = uow.Admins.getByUsernamePassword(model.Username, model.password);
-                HttpContext.Session.SetInt32("id", a.AdminId);
-                
-                return RedirectToAction("Index", "Flight");
+                try
+                {
+                    Admin a = uow.Admins.getByUsernamePassword(model.Username, model.password);
+                    HttpContext.Session.SetInt32("id", a.AdminId);
+
+                    return RedirectToAction("Index", "Flight");
+                }
+                catch
+                {
+                    return View("Login");
+                }
             }
-            catch
+            else
             {
                 return View("Login");
             }
