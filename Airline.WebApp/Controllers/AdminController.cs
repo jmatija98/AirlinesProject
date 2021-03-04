@@ -39,7 +39,8 @@ namespace Airline.WebApp.Controllers
                 }
                 catch
                 {
-                    return View("Login");
+                    ModelState.AddModelError(string.Empty, "Wrong credentials!");
+                    return View();
                 }
             }
             else

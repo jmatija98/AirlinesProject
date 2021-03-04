@@ -187,17 +187,16 @@ namespace Airline.WebApp.Controllers
                     );
                 }
             }
-            if(flightsSearched.Count==0)
-                return RedirectToAction(nameof(Index));
-
-
+            if (flightsSearched.Count == 0)
+            {
+                
+            }
             FlightsWithAirlineWithPilot model = new FlightsWithAirlineWithPilot
             {
                 Flights = flightsSearched,
                 Airlines=airlinesAll,
                 Pilots=pilotsAll
             };
-           
             return View("SearchFlights",model);
         }
 
@@ -220,11 +219,12 @@ namespace Airline.WebApp.Controllers
 
             foreach (Flight flight in flightsAll)
             {
-                endDestinations.Add(new SelectListItem
-                {
-                    Text = flight.EndDestination,
-                    Value = flight.FlightID.ToString()
-                }
+                if (!endDestinations.Any(item => item.Text == flight.EndDestination))
+                    endDestinations.Add(new SelectListItem
+                    {
+                        Text = flight.EndDestination,
+                        Value = flight.FlightID.ToString()
+                    }
                 );
             }
 

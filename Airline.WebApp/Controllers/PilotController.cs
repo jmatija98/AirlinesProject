@@ -31,37 +31,52 @@ namespace Airline.WebApp.Controllers
             return View(model);
         }
 
-        // GET: PilotController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         [HttpPost]
         public ActionResult AddGroup(PilotGroupViewModel request)
         {
             ViewBag.IsLoggedIn = true;
-
-            PilotGroupViewModel model = new PilotGroupViewModel
+            if (ModelState.IsValid)
             {
-                Num=request.Num,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Miles=request.Miles,
-                AirlinesID=request.AirlinesID
-            };
-            //return RedirectToAction(nameof(Index));
-            return PartialView("PilotPartial", model);
+                PilotGroupViewModel model = new PilotGroupViewModel
+                {
+                    Num = request.Num,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Miles = request.Miles,
+                    AirlinesID = request.AirlinesID
+                };
+                return PartialView("PilotPartial", model);
+            }
+            else
+            {
+                return Create();
+            }
+                        
         }
 
         public ActionResult CreateGroup(AddPilotViewModel model)
         {
-            foreach(Pilot p in model.Pilots)
+            if (model!=null)
             {
-                uow.Pilot.Add(p);
+                if (model.Pilots != null)
+                {
+                    foreach (Pilot p in model.Pilots)
+                    {
+                        uow.Pilot.Add(p);
+                    }
+                    uow.Commit();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Create));
+                }
             }
-            uow.Commit();
-            return RedirectToAction(nameof(Index));
+            else
+            {
+                return RedirectToAction(nameof(Create));
+            }
         }
 
         // GET: PilotController/Create
@@ -86,7 +101,7 @@ namespace Airline.WebApp.Controllers
         {
             ViewBag.IsLoggedIn = true;
 
-            try
+            if(ModelState.IsValid)
             {
                 Pilot p = new Pilot
                 {
@@ -99,9 +114,9 @@ namespace Airline.WebApp.Controllers
                 uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                return RedirectToAction(nameof(Create));
+                return Create();
             }
         }
 
@@ -123,7 +138,6 @@ namespace Airline.WebApp.Controllers
                 LastName = pilot.LastName,
                 Miles = pilot.Miles,
                 Airlines = airlines
-
             };
 
             return View(model);
@@ -136,7 +150,7 @@ namespace Airline.WebApp.Controllers
         {
             ViewBag.IsLoggedIn = true;
 
-            try
+            if(ModelState.IsValid)
             {
                 Pilot p = new Pilot
                 {
@@ -151,9 +165,9 @@ namespace Airline.WebApp.Controllers
                 uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                return RedirectToAction(nameof(Index));
+                return Edit(id);
 
             }
         }

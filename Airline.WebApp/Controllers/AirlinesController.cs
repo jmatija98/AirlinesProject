@@ -74,7 +74,7 @@ namespace Airline.WebApp.Controllers
             }
             else
             {
-                return View(m);
+                return Create();
             }
         }
 
@@ -90,7 +90,7 @@ namespace Airline.WebApp.Controllers
                 countries.Add(new SelectListItem { Text = country.Name, Value = country.CountryID.ToString() });
             }
             Airlines a = uow.Airline.FindById(AirlinesID);
-            EditAirlinesViewModel model = new EditAirlinesViewModel
+            AddAirlinesViewModel model = new AddAirlinesViewModel
             {
                 Name = a.Name,
                 YearFounded=a.YearFounded,
@@ -103,11 +103,11 @@ namespace Airline.WebApp.Controllers
         // POST: AirlinesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([FromForm] EditAirlinesViewModel model, [FromRoute(Name = "id")] int id)
+        public ActionResult Edit([FromForm] AddAirlinesViewModel model, [FromRoute(Name = "id")] int id)
         {
             ViewBag.IsLoggedIn = true;
 
-            try
+            if(ModelState.IsValid)
             {
                 Airlines a = new Airlines
                 {
@@ -122,9 +122,9 @@ namespace Airline.WebApp.Controllers
                 uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                return RedirectToAction(nameof(Index));
+                return Edit(id);
             }
         }
 

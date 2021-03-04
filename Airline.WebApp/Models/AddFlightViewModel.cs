@@ -11,8 +11,10 @@ namespace Airline.WebApp.Models
     public class AddFlightViewModel
     {
         [FlightDate(ErrorMessage = "Date must be after or equal to current date")]
+        [Required]
         public DateTime Date { set; get; }
         [Range(1, int.MaxValue, ErrorMessage = "Input incorrect")]
+        [Required]
         public int DurationInMinutes { set; get; }
         [Required(ErrorMessage = "Please enter departure!")]
         public string StartDestination { set; get; }
@@ -23,7 +25,6 @@ namespace Airline.WebApp.Models
         public int Price { get; set; }
         [Required(ErrorMessage = "Please choose pilot")]
         public int PilotID { set; get; }
-        [Required(ErrorMessage = "Please choose pilot")]
         public List<SelectListItem> Pilots { set; get; }
 
     }

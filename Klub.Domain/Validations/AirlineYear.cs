@@ -10,7 +10,7 @@ namespace Airline.Domain.Validations
         public override bool IsValid(object value)
         {
             var num = (Int32)value;
-            if (num >=1919)
+            if (num >=1919 && num<=DateTime.Now.Year)
             {
                 return true;
             }

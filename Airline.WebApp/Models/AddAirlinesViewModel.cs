@@ -17,6 +17,7 @@ namespace Airline.WebApp.Models
         [AirlineYear(ErrorMessage ="Invalid input. Try again")]
         public int YearFounded { set; get; }
         [Required(ErrorMessage = "Please enter number")]
+        [Range(1, int.MaxValue, ErrorMessage = "Input incorrect")]
         public int NumberOfPlanes { set; get; }
         [Required(ErrorMessage = "Please choose country")]
         public int CountryID { set; get; }
