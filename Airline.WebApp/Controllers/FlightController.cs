@@ -27,7 +27,7 @@ namespace Airline.WebApp.Controllers
             ViewBag.IsLoggedIn = true;
             List<Flight> flightsAll = uow.Flight.GetAll();
             List<Pilot> pilotsAll = uow.Pilot.GetAll();
-            List<Airlines> airlinesAll = uow.Airline.GetAll();
+            List<Airlines> airlinesAll = uow.Airlines.GetAll();
             FlightsWithAirlineWithPilot model = new FlightsWithAirlineWithPilot
             {
                 Flights = flightsAll,
@@ -161,7 +161,7 @@ namespace Airline.WebApp.Controllers
         [NotLoggedIn]
         public ActionResult Search([FromForm] SearchFlightsViewModel m)
         {
-            List<Airlines> airlinesAll = uow.Airline.GetAll();
+            List<Airlines> airlinesAll = uow.Airlines.GetAll();
             List<Pilot> pilotsAll = uow.Pilot.GetAll();
             List<Flight> flightsAll = uow.Flight.GetAll();
             Flight f1 = uow.Flight.FindById(m.startID);

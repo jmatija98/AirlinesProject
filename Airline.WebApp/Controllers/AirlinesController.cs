@@ -26,7 +26,7 @@ namespace Airline.WebApp.Controllers
             ViewBag.IsLoggedIn = true;
             
             List<Country> countriesAll = uow.Country.GetAll();
-            List<Airlines> airlinesAll = uow.Airline.GetAll();
+            List<Airlines> airlinesAll = uow.Airlines.GetAll();
             AirlinesWithCountries model = new AirlinesWithCountries
             {
                 
@@ -58,8 +58,17 @@ namespace Airline.WebApp.Controllers
         public ActionResult Create([FromForm] AddAirlinesViewModel m)
         {
             ViewBag.IsLoggedIn = true;
-
-            if(ModelState.IsValid)
+            bool exists = false;
+            List<Airlines> airlineAll = uow.Airlines.GetAll();
+            if (airlineAll.Any(item => item.Name == m.Name))
+            {
+                exists = true;
+            }
+            if (exists == true)
+            {
+                ModelState.AddModelError(string.Empty, "Airline already exists");
+            }
+            if (ModelState.IsValid)
             {
                 Airlines a = new Airlines
                 {
@@ -68,7 +77,7 @@ namespace Airline.WebApp.Controllers
                     NumberOfPlanes=m.NumberOfPlanes,
                     CountryId=m.CountryID
                 };
-                uow.Airline.Add(a);
+                uow.Airlines.Add(a);
                 uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
@@ -89,7 +98,7 @@ namespace Airline.WebApp.Controllers
             {
                 countries.Add(new SelectListItem { Text = country.Name, Value = country.CountryID.ToString() });
             }
-            Airlines a = uow.Airline.FindById(AirlinesID);
+            Airlines a = uow.Airlines.FindById(AirlinesID);
             AddAirlinesViewModel model = new AddAirlinesViewModel
             {
                 Name = a.Name,
@@ -118,7 +127,7 @@ namespace Airline.WebApp.Controllers
                     CountryId = model.CountryID
 
                 };
-                uow.Airline.Change(a);
+                uow.Airlines.Change(a);
                 uow.Commit();
                 return RedirectToAction(nameof(Index));
             }
@@ -133,7 +142,7 @@ namespace Airline.WebApp.Controllers
         {
             ViewBag.IsLoggedIn = true;
 
-            uow.Airline.Delete(id);
+            uow.Airlines.Delete(id);
             uow.Commit();
             return RedirectToAction(nameof(Index));
         }

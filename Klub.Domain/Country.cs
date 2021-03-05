@@ -11,7 +11,6 @@ namespace Airline.Domain
         public int CountryID { get; set; }
         [Required(ErrorMessage = "Please enter name")]
         public string Name { get; set; }
-
         public override string ToString()
         {
             return $"{CountryID}: {Name}";

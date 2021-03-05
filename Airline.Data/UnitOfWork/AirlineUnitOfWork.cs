@@ -13,13 +13,13 @@ namespace Airline.Data.UnitOfWork
         public AirlineUnitOfWork(AirlineContext context)
         {
             this.context = context;
-            Airline = new RepositoryAirline(context);
+            Airlines = new RepositoryAirline(context);
             Country = new RepositoryCountry(context);
             Pilot = new RepositoryPilot(context);
             Flight = new RepositoryFlight(context);
 
         }
-        public IRepositoryAirline Airline { get; set; }
+        public IRepositoryAirline Airlines { get; set; }
         public IRepositoryCountry Country { get; set; }
         public IRepositoryPilot Pilot { get; set; }
         public IRepositoryFlight Flight { get; set; }

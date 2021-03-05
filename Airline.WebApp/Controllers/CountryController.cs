@@ -38,6 +38,16 @@ namespace Airline.WebApp.Controllers
         public ActionResult Create([FromForm]Country c)
         {
             ViewBag.IsLoggedIn = true;
+            bool exists = false;
+            List<Country> countriesAll = unitOfWork.Country.GetAll();
+            if (countriesAll.Any(item => item.Name == c.Name))
+            {
+                exists = true;
+            }
+            if (exists == true)
+            {
+                ModelState.AddModelError(string.Empty, "Country already exists");
+            }
             if (ModelState.IsValid)
             {
                 unitOfWork.Country.Add(c);

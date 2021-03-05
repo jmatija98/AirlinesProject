@@ -23,7 +23,7 @@ namespace Airline.WebApp.Controllers
         public ActionResult Index()
         {
             ViewBag.IsLoggedIn = true;
-            List<Airlines> airlineList = uow.Airline.GetAll();
+            List<Airlines> airlineList = uow.Airlines.GetAll();
             List<Pilot> pilotsList = uow.Pilot.GetAll();
             
 
@@ -84,7 +84,7 @@ namespace Airline.WebApp.Controllers
         {
             ViewBag.IsLoggedIn = true;
 
-            List<Airlines> airlineList = uow.Airline.GetAll();
+            List<Airlines> airlineList = uow.Airlines.GetAll();
             List<SelectListItem> airlineListItems = new List<SelectListItem>();
             foreach (Airlines a in airlineList)
             {
@@ -125,7 +125,7 @@ namespace Airline.WebApp.Controllers
         {
             ViewBag.IsLoggedIn = true;
 
-            List<Airlines> airlinesAll = uow.Airline.GetAll();
+            List<Airlines> airlinesAll = uow.Airlines.GetAll();
             List<SelectListItem> airlines = new List<SelectListItem>();
             foreach (Airlines airline in airlinesAll)
             {
